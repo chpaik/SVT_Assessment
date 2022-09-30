@@ -18,15 +18,15 @@ const controller = {
           let distance = getDistance(package, bots[i]);
           if ( distance < CLOSE_THRESHHOLD ) {
             console.log('multiple');
-            closestDistance = CLOSE_THRESHHOLD;
+            closestDistance = distance;
             closest = closest.batteryLevel > bots[i].batteryLevel ? closest : bots[i];
           } else if ( closestDistance > distance ) {
             closestDistance = distance;
             closest = bots[i];
           }
         }
-        console.log(closest);
-        res.status(201).send(closest);
+        let bot = { robotId: closest.robotId, distanceToGoal: closestDistance, batteryLevel: closest.batteryLevel}
+        res.status(201).send(bot);
       })
       .catch( err => {
         console.log(err);
